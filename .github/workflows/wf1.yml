@@ -1,4 +1,4 @@
-name: Docker
+name: Workflow 1
 
 on:
   push:
@@ -12,13 +12,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Create environment file
-        run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
         
       - name: Docker build
         run: docker build -t my-nginx-image .
       
       - name: Docker run
         run: docker run -d -p 8080:8080 my-nginx-image
+
+      - name: Run test.sh
+        run: |
+          chmod +x test.sh
+          ./test.sh
+          exit_code=$?
+          echo "Exit code: $exit_code"
 
