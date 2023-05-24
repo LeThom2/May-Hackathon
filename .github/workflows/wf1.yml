@@ -31,7 +31,6 @@ jobs:
         run: |
           sleep 10
           docker container ls
-          sleep 5
           wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
           chmod +x test.sh
           ./test.sh
