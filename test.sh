@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker exec my-nginx-container curl localhost:8080
+docker exec my-nginx-container curl localhost:80
 
 
 # # Check if Nginx is running
