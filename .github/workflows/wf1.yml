@@ -17,14 +17,20 @@ jobs:
         run: docker build -t my-nginx-image .
       
       - name: Docker run
-        run: docker run -d -p 8080:8080 my-nginx-image
+        id: run-container
+        run: |
+          container_id=$(docker run -d -p 8080:8080 my-nginx-image)
+          echo "::set-output name=container_id::$container_id"
 
-      - name: Run test.sh
+      - name: Get container ID
+        run: |
+          echo "Container ID: ${{ steps.run-container.outputs.container_id }}"
+
+      - name: Test Nginx server
         run: |
           docker container ls
-          curl -o script.sh https://github.com/LeThom2/May-Hackathon/blob/main/test.sh
-          chmod +x test.sh
-          ./test.sh
-          exit_code=$?
-          echo "Exit code: $exit_code"
+          docker exec ${{ steps.run-container.outputs.container_id }} /bin/bash -c "if curl --output /dev/null --silent --fail http://localhost:8080;
+          then echo 'Nginx server is running and accessible.'; 
+          else echo 'Failed to access Nginx server.'; 
+          fi"
 
