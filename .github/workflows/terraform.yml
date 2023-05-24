@@ -16,6 +16,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Create environment file
+        run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
+
       - name: Terraform Init
         run: terraform init
 
