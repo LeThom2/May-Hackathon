@@ -21,6 +21,7 @@ jobs:
 
       - name: Run test.sh
         run: |
+          docker container ls
           curl -o script.sh https://github.com/LeThom2/May-Hackathon/blob/main/test.sh
           chmod +x test.sh
           ./test.sh
