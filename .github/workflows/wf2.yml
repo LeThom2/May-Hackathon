@@ -1,0 +1,24 @@
+name: Workflow 2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create environment file
+        run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
+        
+      - name: Docker build
+        run: docker build -t my-nginx-image .
+      
+      - name: Docker run
+        run: docker run -d -p 8080:8080 my-nginx-image
+
