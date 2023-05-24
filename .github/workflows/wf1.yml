@@ -22,10 +22,6 @@ jobs:
           container_id=$(docker run -d -p 80:80 --name my-nginx-container my-nginx-image)
           echo "::set-output name=container_id::$container_id"
 
-      # - name: Get container ID
-      #   run: |
-      #     echo "Container ID: ${{ steps.run-container.outputs.container_id }}"
-
       - name: Test Nginx server
         run: |
           sleep 5
