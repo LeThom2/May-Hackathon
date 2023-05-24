@@ -20,7 +20,7 @@ jobs:
         run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
 
       - name: Terraform Init
-        run: terraform init ./terraform
+        run: terraform -chdir=./terraform init
 
       - name: Terraform Plan
         id: plan
@@ -33,6 +33,3 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
-
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve ./terraform
