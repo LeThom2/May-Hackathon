@@ -10,4 +10,3 @@ docker exec my-nginx-container curl localhost:8080
 #   echo "Failed to access Nginx server."
 #   exit 1
 # fi
-
