@@ -19,7 +19,9 @@ jobs:
       - name: Docker run
         id: run-container
         run: |
+          echo "Before docker run"
           container_id=$(docker run -d -p 80:8080 --name my-nginx-container my-nginx-image)
+          echo "After docker run"
           echo "::set-output name=container_id::$container_id"
 
       - name: Get container ID
