@@ -29,6 +29,7 @@ jobs:
 
       - name: Test Nginx server
         run: |
+          sleep 10
           docker container ls
           wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
           chmod +x test.sh
