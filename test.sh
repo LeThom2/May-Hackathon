@@ -1,6 +1,6 @@
 #!/bin/bash
 
- curl http://localhost:8080 
+ curl http://0.0.0.0:8080 
 # then
 #   echo "Nginx server is running and accessible."
 # else
