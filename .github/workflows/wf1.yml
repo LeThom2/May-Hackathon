@@ -26,12 +26,13 @@ jobs:
         run: |
           echo "Container ID: ${{ steps.run-container.outputs.container_id }}"
 
-      - name: Test Nginx server
+      - name: Run test.sh
         run: |
           docker container ls
-          wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
+          sleep 5
+          curl -o script.sh https://github.com/LeThom2/May-Hackathon/blob/main/test.sh
           chmod +x test.sh
           ./test.sh
           exit_code=$?
           echo "Exit code: $exit_code"
-          exit $exit_code
+        
