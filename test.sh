@@ -7,3 +7,4 @@ else
   echo "Failed to access Nginx server."
   exit 1
 fi
+
