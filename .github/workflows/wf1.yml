@@ -16,12 +16,12 @@ jobs:
       - name: Docker build
         run: docker build -t my-nginx-image .
       
-      - name: Docker run
+      - name: Docker run --name my-nginx-container my-nginx-image
         id: run-container
         run: |
           container_id=$(docker run -d -p 80:8080 my-nginx-image)
           echo "::set-output name=container_id::$container_id"
-          --name my-nginx-container my-nginx-image
+          
 
       - name: Get container ID
         run: |
