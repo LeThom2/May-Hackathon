@@ -2,8 +2,12 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resource "aws_instance" "example" {
-  ami           = "ami-0123456789abcdef0"
-  instance_type = "t2.micro"
+resource "aws_instance" "May-Hackathon" {
+  ami           = "ami-026ebd4cfe2c043b2"
+  instance_type = "t2.medium"
   key_name      = "my-key-pair"
+  tags = {
+    Name = "May-Hackathon"
+  }
 }
+ 
