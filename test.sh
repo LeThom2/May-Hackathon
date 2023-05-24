@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker exec my-nginx-image curl localhost:8080
+docker exec my-nginx-container curl localhost:8080
 # then
 #   echo "Nginx server is running and accessible."
 # else
