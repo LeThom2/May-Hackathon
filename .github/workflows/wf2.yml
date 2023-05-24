@@ -1,24 +1,27 @@
-name: Workflow 2
-
+name: Build and Push Docker Image
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Test Nginx Server"]
+    types:
+      - completed
 
 jobs:
-  build:
+  build_and_push:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create environment file
-        run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
-        
-      - name: Docker build
-        run: docker build -t my-nginx-image .
-      
-      - name: Docker run
-        run: docker run -d -p 8080:8080 my-nginx-image
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t my-nginx-image .
+          docker tag my-nginx-image:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
