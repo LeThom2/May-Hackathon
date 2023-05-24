@@ -17,16 +17,22 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Create environment file
-        run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
+        run: echo "::set-env name=TF_IN_AUTOMATION::true" >> $GITHUB_ENV
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init ./terraform
 
       - name: Terraform Plan
-        run: terraform plan
+        id: plan
+        run: |
+          terraform plan -out=tfplan ./terraform
+          echo "::set-output name=plan_path::tfplan"
+
+      - name: Show Terraform Plan
+        run: cat ${{ steps.plan.outputs.plan_path }}
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve ${{ steps.plan.outputs.plan_path }}
 
       - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+        run: terraform destroy -auto-approve ./terraform
