@@ -1,4 +1,4 @@
-name: Workflow 1
+name: Docker
 
 on:
   push:
@@ -13,23 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-
       - name: Create environment file
         run: echo "TF_IN_AUTOMATION=true" >> $GITHUB_ENV
-
-      - name: Terraform Init
-        run: terraform -chdir=./terraform init
-
-      - name: Terraform Plan
-        id: plan
-        run: |
-          terraform -chdir=./terraform plan -out=tfplan
-          echo "::set-output name=plan_path::tfplan"
-
-      - name: Show Terraform Plan
-        run: cat ${{ steps.plan.outputs.plan_path }}
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        
+      - name: Docker build
+        run: docker build -t my-nginx-image .
+      
+      - name: Docker run
+        run: docker run -d -p 8080:8080 my-nginx-image
