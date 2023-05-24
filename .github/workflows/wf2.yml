@@ -1,4 +1,5 @@
 name: Workflow 2
+
 on:
   workflow_run:
     workflows: ["Workflow 1"]
@@ -25,3 +26,6 @@ jobs:
           docker build -t my-nginx-image .
           docker tag my-nginx-image:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
