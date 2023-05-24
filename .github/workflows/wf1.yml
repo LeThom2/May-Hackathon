@@ -22,15 +22,14 @@ jobs:
           container_id=$(docker run -d -p 80:80 --name my-nginx-container my-nginx-image)
           echo "::set-output name=container_id::$container_id"
 
-      - name: Get container ID
-        run: |
-          echo "Container ID: ${{ steps.run-container.outputs.container_id }}"
+      # - name: Get container ID
+      #   run: |
+      #     echo "Container ID: ${{ steps.run-container.outputs.container_id }}"
 
       - name: Test Nginx server
         run: |
-          sleep 10
+          sleep 5
           docker container ls
-          docker container ps
           wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
           chmod +x test.sh
           ./test.sh
