@@ -19,8 +19,10 @@ jobs:
           curl -sL -o hadolint "https://github.com/hadolint/hadolint/releases/latest/download/hadolint-$(uname -s)-$(uname -m)"
           chmod +x hadolint
 
-      - name: Run hadolint
-        run: /usr/bin/hadolint Dockerfile
+      - name: Lint Dockerfile
+        run: |
+          sleep 10
+          /usr/bin/hadolint Dockerfile
 
 
       # Shell linter 
