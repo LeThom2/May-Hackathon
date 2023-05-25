@@ -4,7 +4,7 @@
     output=$(docker exec my-nginx-container curl localhost:80)
 
 #Check container for Output variable and relay message if successful 
-if [[ $? -eq 0 ]]; then
+if [! make mytarget;]; then
     echo "Test passed: Connection successful"
     echo "Output: $output"
     else
