@@ -23,7 +23,7 @@ jobs:
       - name: Lint Dockerfile
         run: hadolint Dockerfile
 
-      # Shell linter
+      # Shell linter 
       - name: Install shellcheck
         run: sudo apt-get install shellcheck -y
 
