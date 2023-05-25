@@ -18,4 +18,4 @@ jobs:
         - name: Run ShellCheck
           uses: azohra/shell-linter@latest
           with:
-            path: "https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh"
+            path: "./test.sh"
