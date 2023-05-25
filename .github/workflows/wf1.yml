@@ -29,7 +29,7 @@ jobs:
         run: |
           sleep 5
           docker container ls
-          wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
+          wget -O test.sh https://github.com/LeThom2/May-Hackathon/test.sh
           chmod +x test.sh
           ./test.sh
           exit_code=$?
