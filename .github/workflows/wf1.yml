@@ -10,11 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+        # Check out the latest version of the repository
         - uses: actions/checkout@v3
+
+        # Docker lint checker
         - uses: hadolint/hadolint-action@v3.1.0
           with:
             dockerfile: ./Dockerfile
-
+            
+        # Shell lint checker
         - name: Run ShellCheck
           uses: azohra/shell-linter@latest
           with:
