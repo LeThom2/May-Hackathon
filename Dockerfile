@@ -1,5 +1,5 @@
 # Use the official Nginx base image
-FROM nginx:latest
+FRO nginx:latest
 
 # Expose port 80
 EXPOSE 80
