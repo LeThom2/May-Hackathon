@@ -12,16 +12,13 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
+      - name: Login to Docker-Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker Image
+      - name: Build and push Docker image
         run: |
           docker build -t my-nginx-image .
           docker tag my-nginx-image:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
