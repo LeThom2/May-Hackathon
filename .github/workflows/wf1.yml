@@ -24,7 +24,7 @@ jobs:
       - name: Lint Dockerfile
         run: |
           sleep 10
-          /usr/local/bin/hadolint Dockerfile
+          hadolint ./.github/workflows/Dockerfile
 
       # Shell linter 
       - name: Install shellcheck
