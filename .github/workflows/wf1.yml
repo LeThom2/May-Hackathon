@@ -28,6 +28,8 @@ jobs:
         run: |
           sleep 10
           hadolint ../Dockerfile
+        env:
+          DEBUG: true
 
       # Shell linter 
       - name: Install shellcheck
