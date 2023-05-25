@@ -15,7 +15,25 @@ jobs:
           with:
             dockerfile: ./Dockerfile
 
-        - name: Run ShellCheck
-          uses: azohra/shell-linter@latest
-          with:
-            path: "https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh"
+      # Build
+        - name: Docker build
+          run: docker build -t my-nginx-image .
+      
+      # Run
+        - name: Docker run 
+          id: run-container
+          run: |
+            container_id=$(docker run -d -p 80:80 --name my-nginx-container my-nginx-image)
+            echo "::set-output name=container_id::$container_id"
+
+      # Test
+        - name: Test Nginx server
+          run: |
+            sleep 5
+            docker container ls
+            wget -O test.sh https://github.com/LeThom2/May-Hackathon/test.sh
+            chmod +x test.sh
+            ./test.sh
+            exit_code=$?
+            echo "Exit code: $exit_code"
+            exit $exit_code
