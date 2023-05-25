@@ -13,6 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Build
+      - name: Docker build
+        run: docker build -t my-nginx-image .
+
       # Dockerfile linter
       - name: Install hadolint
         run: |
@@ -24,7 +28,7 @@ jobs:
       - name: Lint Dockerfile
         run: |
           sleep 10
-          /usr/local/bin/hadolint Dockerfile
+          hadolint ./.github/workflows/Dockerfile
 
       # Shell linter 
       - name: Install shellcheck
@@ -32,10 +36,6 @@ jobs:
 
       - name: Lint Shell Script
         run: shellcheck your-script.sh
-
-      # Build
-      - name: Docker build
-        run: docker build -t my-nginx-image .
       
       # Run
       - name: Docker run 
