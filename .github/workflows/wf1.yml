@@ -24,7 +24,6 @@ jobs:
           sleep 10
           /usr/bin/hadolint Dockerfile
 
-
       # Shell linter 
       - name: Install shellcheck
         run: sudo apt-get install shellcheck -y
