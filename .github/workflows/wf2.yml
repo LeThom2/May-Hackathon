@@ -1,5 +1,4 @@
 name: Workflow 2
-
 on:
   workflow_run:
     workflows: ["Workflow 1"]
@@ -12,20 +11,28 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and Push Docker Image
+      # Build
+      - name: Docker build
+        run: docker build -t my-nginx-image .
+      
+      # Run
+      - name: Docker run 
+        id: run-container
         run: |
-          docker build -t my-nginx-image .
-          docker tag my-nginx-image:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+          container_id=$(docker run -d -p 80:80 --name my-nginx-container my-nginx-image)
+          echo "::set-output name=container_id::$container_id"
+
+      # Test
+      - name: Test Nginx server
+        run: |
+          sleep 5
+          docker container ls
+          wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
+          chmod +x test.sh
+          ./test.sh
+          exit_code=$?
+          echo "Exit code: $exit_code"
+          exit $exit_code
