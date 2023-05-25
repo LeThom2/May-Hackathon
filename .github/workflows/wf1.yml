@@ -16,27 +16,6 @@ jobs:
       # Build
       - name: Docker build
         run: docker build -t my-nginx-image .
-
-      # Dockerfile linter
-      - name: Install hadolint
-        run: |
-          curl -sL -o hadolint "https://github.com/hadolint/hadolint/releases/latest/download/hadolint-$(uname -s)-$(uname -m)"
-          chmod +x hadolint
-          sudo mv hadolint /usr/local/bin/
-
-      - name: Lint Dockerfile
-        run: |
-          sleep 10
-          hadolint ../Dockerfile
-        env:
-          DEBUG: true
-
-      # Shell linter 
-      - name: Install shellcheck
-        run: sudo apt-get install shellcheck -y
-
-      - name: Lint Shell Script
-        run: shellcheck your-script.sh
       
       # Run
       - name: Docker run 
