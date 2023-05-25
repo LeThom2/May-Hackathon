@@ -13,9 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy Dockerfile
-        run: cp ../Dockerfile .
-
       # Dockerfile linter
       - name: Install hadolint
         run: |
@@ -25,9 +22,6 @@ jobs:
 
       - name: Lint Dockerfile
         run: hadolint Dockerfile
-
-      - name: Copy Shell Script
-        run: cp ../test.sh .
 
       # Shell linter
       - name: Install shellcheck
