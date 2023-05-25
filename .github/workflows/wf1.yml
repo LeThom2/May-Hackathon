@@ -19,10 +19,10 @@ jobs:
           curl -sL -o hadolint "https://github.com/hadolint/hadolint/releases/latest/download/hadolint-$(uname -s)-$(uname -m)"
           chmod +x hadolint
 
-      -  name: Lint Dockerfile
-         run: |
+      - name: Lint Dockerfile
+        run: |
           sleep 10
-          hadolint dockerfile
+          /usr/bin/hadolint Dockerfile
 
       # Shell linter 
       - name: Install shellcheck
