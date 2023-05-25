@@ -10,28 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        - uses: actions/checkout@v3
+        - uses: hadolint/hadolint-action@v3.1.0
+          with:
+            dockerfile: Dockerfile
 
-      # Build
-      - name: Docker build
-        run: docker build -t my-nginx-image .
-      
-      # Run
-      - name: Docker run 
-        id: run-container
-        run: |
-          container_id=$(docker run -d -p 80:80 --name my-nginx-container my-nginx-image)
-          echo "::set-output name=container_id::$container_id"
-
-      # Test
-      - name: Test Nginx server
-        run: |
-          sleep 5
-          docker container ls
-          wget -O test.sh https://raw.githubusercontent.com/LeThom2/May-Hackathon/main/test.sh
-          chmod +x test.sh
-          ./test.sh
-          exit_code=$?
-          echo "Exit code: $exit_code"
-          exit $exit_code
+        - name: Run ShellCheck
+          uses: azohra/shell-linter@latest
+          with:
+            path: "setup.sh"

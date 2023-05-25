@@ -1,0 +1,31 @@
+name: Workflow 3
+
+on:
+  workflow_run:
+    workflows: ["Workflow 2"]
+    types:
+      - completed
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t my-nginx-image .
+          docker tag my-nginx-image:latest ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-nginx-image:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
