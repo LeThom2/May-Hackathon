@@ -24,11 +24,10 @@ jobs:
           chmod +x hadolint
           sudo mv hadolint /usr/local/bin/
 
-
       - name: Lint Dockerfile
         run: |
           sleep 10
-          hadolint ./.github/workflows/Dockerfile
+          hadolint ../Dockerfile
 
       # Shell linter 
       - name: Install shellcheck
